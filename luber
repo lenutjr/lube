@@ -1,0 +1,164 @@
+getgenv().Config = {}
+
+local lp = game:GetService("Players").LocalPlayer
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("idk some anime game")
+
+local b = w:CreateFolder("Autofarm")
+
+local egg = w:CreateFolder("Egg")
+
+local c = w:CreateFolder("Misc")
+
+c:Button("AntiAFK",function()
+    antiAFK()
+end)
+
+b:Toggle("Strength",function(v)
+    Config.farmStrength = v
+    spawn(farmStrength)
+end)
+
+b:Toggle("Defense",function(v)
+    Config.farmDefense = v
+    spawn(farmDefense)
+end)
+
+b:Toggle("Speed",function(v)
+    Config.farmSpeed = v
+    spawn(farmSpeed)
+end)
+
+b:Toggle("Chakra",function(v)
+    Config.farmChakra = v
+    spawn(farmChakra)
+end)
+
+b:Toggle("Sword",function(v)
+    Config.farmSword = v
+    spawn(farmSword)
+end)
+
+b:Toggle("Farm All Stats",function(v)
+    Config.farmAll = v
+    spawn(farmAll)
+end)
+
+b:Dropdown("Mobs",{"Thug1", "Thug2", "Thug1 and Thug2","Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
+    selectedMob = mob
+end)
+
+b:Dropdown("Mobs 2",{"Thug1", "Thug2", "Thug1 and Thug2","Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
+    selectedMob2 = mob
+end)
+
+b:Dropdown("Fight Method",{"Fist", "Sword"},true,function(method)
+    selectedMethod = method
+    if selectedMethod == "Fist" then
+        selectedMethod = "Strength"
+    end
+end)
+
+b:Toggle("Farm Mob",function(v)
+    Config.mobFarm = v
+    spawn(mobFarm)
+end)
+
+egg:Toggle("Open Champion Pod",function(v)
+    Config.champPod = v
+    spawn(champPod)
+end)
+
+c:DestroyGui()
+
+function farmStrength()
+    while task.wait() and Config.farmStrength do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Strength")
+    end
+end
+
+function farmDefense()
+    while task.wait() and Config.farmDefense do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Durability")
+    end
+end
+
+function farmSpeed()
+    while task.wait() and Config.farmSpeed do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Speed")
+    end
+end
+
+function farmChakra()
+    while task.wait() and Config.farmChakra do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Chakra")
+    end
+end
+
+function farmSword()
+    while task.wait() and Config.farmSword do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Sword")
+    end
+end
+
+function farmAll()
+    while Config.farmAll do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Strength")
+        task.wait(0.7)
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Durability")
+        task.wait(0.7)
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Chakra")
+        task.wait(0.7)
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Sword")
+        task.wait(0.7)
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", "Speed")
+        task.wait(0.7)
+    end
+end
+
+function mobFarm()
+    while task.wait() and Config.mobFarm do
+        local foundMob = false
+        for _, v in pairs(workspace.Scriptable.Mobs:GetDescendants()) do
+            if v.Name == "HumanoidRootPart" and v.Parent and (v.Parent.Name == selectedMob or v.Parent.Name == selectedMob2) then
+                local humanoid = v.Parent:FindFirstChild("Humanoid")
+                
+                if humanoid and humanoid.Health > 0 then
+                    foundMob = true
+                    repeat task.wait()
+                        if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+                            --lp.Character.Humanoid:ChangeState(14)
+                            lp.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(-90), 0, 0) + Vector3.new(0, 5, 0)     
+                        end
+
+                        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Stats/RemoteFunction"):InvokeServer("TrainStat", selectedMethod)
+                        
+                        humanoid = (v.Parent and v.Parent:FindFirstChild("Humanoid")) or nil
+
+                        local mobHP = humanoid and humanoid.Health or 0
+                    until mobHP <= 0 or not Config.mobFarm
+                end
+            end
+        end
+        if not foundMob then
+            task.wait()
+        end
+    end
+end
+
+function antiAFK()
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+       vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+       wait(1)
+       vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    end)
+end
+
+function champPod()
+    while task.wait() and Config.champPod do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Champions/RemoteEvent"):FireServer("Roll", "Champion Capsule", 1)
+    end
+end
