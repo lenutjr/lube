@@ -48,11 +48,11 @@ b:Toggle("Farm All Stats",function(v)
     spawn(farmAll)
 end)
 
-b:Dropdown("Mobs",{"Thug1", "Thug2", "Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
+b:Dropdown("Mobs",{"None", "Thug1", "Thug2", "Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
     selectedMob = mob
 end)
 
-b:Dropdown("Mobs 2",{"Thug1", "Thug2", "Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
+b:Dropdown("Mobs 2",{"None", "Thug1", "Thug2", "Demon1", "Demon2", "arrowDemon", "brute", "cyclop", "evilSaiyan1", "freezaTroop1", "freezaTroop2", "freezaTroop3", "jinyuSquad", "lowtierdemon", "nomu", "pirate1", "pirate2", "saiyanCaptain", "sandChunin1", "sandChunin2", "sandJonin", "spiderdemon", "stain", "strongDemon", "upperrankdemon", "yakuza1", "yakuza2", "yakuzacommander1", "yakuzacommander2", "yeti"},true,function(mob)
     selectedMob2 = mob
 end)
 
