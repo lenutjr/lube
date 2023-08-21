@@ -10,6 +10,8 @@ local b = w:CreateFolder("Autofarm")
 
 local egg = w:CreateFolder("Egg")
 
+local teleport = w:CreateFolder("Teleports")
+
 local c = w:CreateFolder("Misc")
 
 c:Button("AntiAFK",function()
@@ -71,6 +73,28 @@ egg:Toggle("Open Champion Pod",function(v)
     spawn(champPod)
 end)
 
+local placeTable = {}
+
+for _, v in pairs(workspace.Scriptable.TrainingsAreas:GetChildren()) do
+    if v:IsA('Part') then
+        table.insert(placeTable, v.Name)
+    end
+end
+
+local placeOptions = {}
+
+for _, place in pairs(placeTable) do
+    table.insert(placeOptions, place)
+end
+
+teleport:Dropdown("Locations",placeOptions,true,function(place)
+    selectedArea = place
+end)
+
+teleport:Button("TP",function()
+    trainingTeleport()
+end)
+
 c:DestroyGui()
 
 function farmStrength()
@@ -129,7 +153,7 @@ function mobFarm()
                     foundMob = true
                     repeat task.wait()
                         if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
-                            lp.Character.Humanoid:ChangeState(14)
+                            --lp.Character.Humanoid:ChangeState(14)
                             lp.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(-90), 0, 0) + Vector3.new(0, 5, 0)     
                         end
 
@@ -160,5 +184,13 @@ end
 function champPod()
     while task.wait() and Config.champPod do
         game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Champions/RemoteEvent"):FireServer("Roll", "Champion Capsule", 1)
+    end
+end
+
+function trainingTeleport()
+    for _, v in pairs(workspace.Scriptable.TrainingsAreas:GetChildren()) do
+        if v:IsA("Part") and v.Name == selectedArea then
+            lp.Character.HumanoidRootPart.CFrame = v.CFrame
+        end
     end
 end
