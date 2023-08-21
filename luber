@@ -63,6 +63,11 @@ b:Dropdown("Fight Method",{"Fist", "Sword"},true,function(method)
     end
 end)
 
+b:Toggle("Use Abilities",function(v)
+    Config.useAbilities = v
+    spawn(useAbilities)
+end)
+
 b:Toggle("Farm Mob",function(v)
     Config.mobFarm = v
     spawn(mobFarm)
@@ -168,6 +173,21 @@ function mobFarm()
         end
         if not foundMob then
             task.wait()
+        end
+    end
+end
+
+function useAbilities()
+        while task.wait() and Config.useAbilities do
+            for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.AbilityList.AbilityList:GetDescendants()) do
+                if v.Name == "cooldown" then
+                    local args = {
+                    [1] = "ActivatePower",
+                    [2] = v.Parent.Name
+                }
+        
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Powers/RemoteFunction"):InvokeServer(unpack(args))
+            end
         end
     end
 end
