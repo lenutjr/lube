@@ -158,7 +158,7 @@ function mobFarm()
                     foundMob = true
                     repeat task.wait()
                         if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
-                            --lp.Character.Humanoid:ChangeState(14)
+                            lp.Character.Humanoid:ChangeState(14)
                             lp.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(-90), 0, 0) + Vector3.new(0, 5, 0)     
                         end
 
